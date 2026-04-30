@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'db.php';
 
 $id   = $_GET['id'] ?? '';
@@ -39,7 +40,14 @@ if (!$p) {
           Cart
           <span class="cart-count" style="display:none">0</span>
         </a>
-        <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+        <?php if (isset($_SESSION['user_role'])): ?>
+          <?php if ($_SESSION['user_role'] === 'admin'): ?>
+            <a href="admin/dashboard.php" class="btn btn-outline btn-sm">Dashboard</a>
+          <?php endif; ?>
+          <a href="logout.php" class="btn btn-outline btn-sm">Logout</a>
+        <?php else: ?>
+          <a href="login.php" class="btn btn-outline btn-sm">Sign In</a>
+        <?php endif; ?>
       </div>
     </div>
   </nav>
